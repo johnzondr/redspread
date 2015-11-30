@@ -7,8 +7,18 @@ class Api::V1::OcrController < ApiController
 			:headers => { "Authorization" => "Basic S2VlcCBVcCBBcHA6R293MVVLcW1XL0FNSXRkZ0Q0SWhHMTVJIA=="})
 		
 		# @courses = parse(parse_url)
-		p response
-		render json: '{yes:no}'
+		tasks = response.parsed_response.first[1]["task"]
+		# p tasks
+		# p task_id.class
+		url = nil
+		tasks.each do |task|
+			# p task["id"]
+			if task["id"] == task_id
+				url = task["resultUrl"]
+			end
+		end
+		@courses = parse(url)
+
 
 	end
 
