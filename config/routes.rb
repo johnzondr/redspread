@@ -1,6 +1,7 @@
 require 'api_constraints'
 
 Rails.application.routes.draw do
+    root 'api/v1/ocr#index'
   # constraints :subdomain => 'api' do
     namespace :api, path: nil, defaults: {format: 'json'} do
 

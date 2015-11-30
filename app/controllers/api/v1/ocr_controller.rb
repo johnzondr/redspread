@@ -6,4 +6,8 @@ class Api::V1::OcrController < ApiController
 		@courses = parse(parse_url)
 	end
 
+	def index
+		render json: '{yes:no}'
+	end
+
 end
