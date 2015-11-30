@@ -11,19 +11,32 @@ class Api::V1::OcrController < ApiController
 		# p tasks
 		# p task_id.class
 		url = nil
-		tasks.each do |task|
-			# p task["id"]
-			if task["id"] == task_id
-				url = task["resultUrl"]
-			end
+		while ! url do
+			find_url(tasks)
+			sleep(1)
+		
 		end
+
 		@courses = parse(url)
+
+
 
 
 	end
 
 	def index
 		render json: '{yes:no}'
+	end
+
+
+	private
+
+	def find_url(tasks)
+		tasks.each do |task|
+				url = task["resultUrl"]
+			end
+		end
+		return url
 	end
 
 end
