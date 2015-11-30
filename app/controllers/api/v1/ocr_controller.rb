@@ -7,7 +7,7 @@ class Api::V1::OcrController < ApiController
 			:headers => { "Authorization" => "Basic S2VlcCBVcCBBcHA6R293MVVLcW1XL0FNSXRkZ0Q0SWhHMTVJIA=="})
 		
 		# @courses = parse(parse_url)
-		# p response.find_by[id: task_id]
+		p response
 		render json: '{yes:no}'
 
 	end
