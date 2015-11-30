@@ -12,7 +12,7 @@ class Api::V1::OcrController < ApiController
 		# p task_id.class
 		url = nil
 		while ! url do
-			find_url(tasks)
+			url = find_url(tasks)
 			sleep(1)
 		
 		end
@@ -32,11 +32,13 @@ class Api::V1::OcrController < ApiController
 	private
 
 	def find_url(tasks)
+		url = nil
 		tasks.each do |task|
 				url = task["resultUrl"]
-			end
 		end
 		return url
 	end
+		
+	
 
 end
