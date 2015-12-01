@@ -3,6 +3,7 @@ require 'parse'
 class Api::V1::OcrController < ApiController
 	def post
 		task_id = params[:task_id]
+		current_user = params[:user_id]
 		response = HTTParty.get('https://cloud.ocrsdk.com/listFinishedTasks',
 			:headers => { "Authorization" => "Basic S2VlcCBVcCBBcHA6R293MVVLcW1XL0FNSXRkZ0Q0SWhHMTVJIA=="})
 		
@@ -17,6 +18,7 @@ class Api::V1::OcrController < ApiController
 		
 		end
 		@courses = Ocr.parse(url)
+		current_user.register(@courses)
 
 	end
 
