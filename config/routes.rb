@@ -7,7 +7,8 @@ Rails.application.routes.draw do
 
 
       scope module: :v1, constraints: ApiConstraints.new(version: 1, default: true) do
-        post 'ocr', to: 'ocr#post', as: 'ocr'        
+        post 'ocr', to: 'ocr#post', as: 'ocr'
+        resources :users, :only => [:create]        
       end
 
       # scope module: :v3, constraints: ApiConstraints.new(version: 3) do
