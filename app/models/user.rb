@@ -10,20 +10,18 @@ class User < ActiveRecord::Base
 		end
 	end
 
-	def monday
-		schedule = self.courses.where(monday: true)
-	end
-
-	def tuesday
-		schedule = self.courses.where(tuesday: true)
-	end
-	def wednesday
-		schedule = self.courses.where(wednesday: true)
-	end
-	def thursday
-		schedule = self.courses.where(thursday: true)
-	end
-	def friday
-		schedule = self.courses.where(friday: true)
+	def schedule_for(day)
+		case day
+		when "m"
+			schedule = self.courses.where(monday: true)
+		when "t"
+			schedule = self.courses.where(tuesday: true)
+		when "w"
+			schedule = self.courses.where(wednesday: true)
+		when "r"
+			schedule = self.courses.where(thursday: true)
+		when "f"
+			schedule = self.courses.where(friday: true)
+		end	
 	end
 end
