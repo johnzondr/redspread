@@ -16,11 +16,7 @@ class Api::V1::OcrController < ApiController
 			sleep(1)
 		
 		end
-
 		@courses = Ocr.parse(url)
-
-
-
 
 	end
 
