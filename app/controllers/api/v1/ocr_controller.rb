@@ -17,7 +17,7 @@ class Api::V1::OcrController < ApiController
 		
 		end
 
-		@courses = parse(url)
+		@courses = Ocr.parse(url)
 
 
 
