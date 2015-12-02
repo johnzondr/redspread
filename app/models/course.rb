@@ -20,7 +20,7 @@ class Course < ActiveRecord::Base
 			course.course_registration_number = entry[3]
 			course.room = entry[4].floor
 			course.building = entry[5]
-			course.start_time = Time.at(entry[6]).strftime('%R')
+			course.start_time = entry[6]
 			day_ary = entry[7].split(//)
 			(course.monday = true) if day_ary.include?("M")
 			(course.tuesday = true) if day_ary.include?("T")
