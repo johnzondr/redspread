@@ -12,15 +12,15 @@ class User < ActiveRecord::Base
 
 	def schedule_for(day)
 		case day
-		when "m"
+		when "1"
 			schedule = self.courses.where(monday: true)
-		when "t"
+		when "2"
 			schedule = self.courses.where(tuesday: true)
-		when "w"
+		when "3"
 			schedule = self.courses.where(wednesday: true)
-		when "r"
+		when "4"
 			schedule = self.courses.where(thursday: true)
-		when "f"
+		when "5"
 			schedule = self.courses.where(friday: true)
 		end	
 	end
