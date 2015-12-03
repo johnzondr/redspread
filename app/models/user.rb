@@ -5,8 +5,11 @@ class User < ActiveRecord::Base
 
 	def register(crn_ary)
 		crn_ary.each do |crn|
-			course_id = Course.where(course_registration_number: crn).take.id
-			CourseMembership.create(user_id: self.id, course_id: course_id)
+			course= Course.where(course_registration_number: crn).take
+			if course
+				course_id = course.id
+				CourseMembership.create(user_id: self.id, course_id: course_id)
+			end
 		end
 	end
 
