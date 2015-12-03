@@ -18,7 +18,12 @@ class Api::V1::OcrController < ApiController
 		
 		end
 		@courses = Ocr.parse(url)
-		current_user.register(@courses)
+		
+			if @courses.any?
+				current_user.register(@courses)
+				render "post"
+			end
+		render nothing: true
 
 	end
 
