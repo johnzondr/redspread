@@ -6,7 +6,9 @@ class User < ActiveRecord::Base
 	def register(crn_ary)
 		crn_ary.each do |crn|
 			course= Course.where(course_registration_number: crn).take
-			if course
+
+			#regiser the course for the user if the course exists and the user is not already reigstered for it
+			if course && ( ! self.courses.include?(course))
 				course_id = course.id
 				CourseMembership.create(user_id: self.id, course_id: course_id)
 			end
