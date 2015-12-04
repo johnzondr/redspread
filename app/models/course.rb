@@ -18,7 +18,13 @@ class Course < ActiveRecord::Base
 			course.department = entry[1]
 			course.course_number = entry[2].floor
 			course.course_registration_number = entry[3]
-			course.room = entry[4].floor
+			
+			if entry[4].class == String
+				course.room = entry[4]
+			else
+				course.room = entry[4].floor
+			end
+			
 			course.building = entry[5]
 			course.start_time = entry[6]
 			day_ary = entry[7].split(//)
