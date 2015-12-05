@@ -9,11 +9,12 @@ class Api::V1::OcrController < ApiController
 		
 		# @courses = parse(parse_url)
 		tasks = response.parsed_response.first[1]["task"]
+		p tasks
 		# p tasks
 		# p task_id.class
 		url = nil
 		while ! url do
-			url = find_url(tasks)
+			url = find_url(tasks, task_id)
 			sleep(1)
 		
 		end
@@ -37,10 +38,12 @@ class Api::V1::OcrController < ApiController
 
 	private
 
-	def find_url(tasks)
+	def find_url(tasks, task_id)
 		url = nil
 		tasks.each do |task|
+			if task["id"] == task_id
 				url = task["resultUrl"]
+			end
 		end
 		return url
 	end
