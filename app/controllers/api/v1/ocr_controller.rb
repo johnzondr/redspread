@@ -43,6 +43,7 @@ class Api::V1::OcrController < ApiController
 		tasks.each do |task|
 			if task["id"] == task_id
 				url = task["resultUrl"]
+				return url
 			end
 		end
 		return url
