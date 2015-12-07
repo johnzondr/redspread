@@ -35,6 +35,13 @@ class Api::V1::OcrController < ApiController
 		render json: '{yes:no}'
 	end
 
+	def destroy
+		current_user = User.find(params[:user_id])
+		current_user.courses.delete_all
+		render nothing: true
+	end
+
+
 
 	private
 
@@ -48,7 +55,5 @@ class Api::V1::OcrController < ApiController
 		end
 		return url
 	end
-		
-	
 
 end
