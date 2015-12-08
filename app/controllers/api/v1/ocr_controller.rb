@@ -4,16 +4,11 @@ class Api::V1::OcrController < ApiController
 	def post
 		task_id = params[:task_id]
 		current_user = User.find(params[:user_id])
-		response = HTTParty.get('https://cloud.ocrsdk.com/listFinishedTasks',
-			:headers => { "Authorization" => "Basic S2VlcCBVcCBBcHA6R293MVVLcW1XL0FNSXRkZ0Q0SWhHMTVJIA=="})
-		
-		# @courses = parse(parse_url)
-		tasks = response.parsed_response.first[1]["task"]
-		p tasks
 		# p tasks
 		# p task_id.class
 		url = nil
 		while ! url do
+			tasks = get_task_list
 			url = find_url(tasks, task_id)
 			sleep(1)
 		
@@ -44,6 +39,13 @@ class Api::V1::OcrController < ApiController
 
 
 	private
+
+	def get_task_list
+		response = HTTParty.get('https://cloud.ocrsdk.com/listFinishedTasks',
+			:headers => { "Authorization" => "Basic S2VlcCBVcCBBcHA6R293MVVLcW1XL0FNSXRkZ0Q0SWhHMTVJIA=="})
+		response.parsed_response.first[1]["task"]
+	end
+
 
 	def find_url(tasks, task_id)
 		url = nil
