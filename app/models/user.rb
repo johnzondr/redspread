@@ -1,7 +1,6 @@
 class User < ActiveRecord::Base
 	validates :device_id, uniqueness: true
-
-	
+	has_secure_token
 	has_many :course_memberships
 	has_many :courses, :through => :course_memberships
 

@@ -1,1 +1,1 @@
-json.user @user
+json.token @user.token

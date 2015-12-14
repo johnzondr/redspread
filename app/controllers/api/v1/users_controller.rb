@@ -5,9 +5,17 @@ class Api::V1::UsersController < ApiController
 		#check if user's device exist
 		@user = User.find_by(device_id: device_id)
 
-		# if @
 		
-		@user = User.new
-		@user.save
+		if @user
+			# if user exists, return user's existing token
+		else
+			# if user doesn't exist, create new user and return token
+			@user = User.new
+			@user.device_id = device_id
+			@user.save
+
+		end
+		
+		
 	end
 end
