@@ -11,7 +11,6 @@ class Api::V1::UsersController < ApiController
 		else
 			# if user doesn't exist, create new user and return token
 			@user = User.new
-			@user.device_id = device_id
 			@user.save
 
 		end
