@@ -3,7 +3,7 @@ require 'parse'
 class Api::V1::OcrController < ApiController
 	def post
 		task_id = params[:task_id]
-		current_user = User.find(params[:user_id])
+		current_user = User.find_by(token: params[:token])
 		# p tasks
 		# p task_id.class
 		url = nil
