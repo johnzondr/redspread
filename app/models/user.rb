@@ -18,6 +18,13 @@ class User < ActiveRecord::Base
 		end
 	end
 
+	def unenroll_course(course_id)
+		enrollment = CourseMembership.where(user_id: self.id, course_id: course_id).take
+		if enrollment
+			enrollment.delete
+		end
+	end
+
 	def schedule_for(day)
 		case day
 		when "1"
