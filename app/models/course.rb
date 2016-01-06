@@ -21,18 +21,20 @@ class Course < ActiveRecord::Base
 			
 			if entry[4].class == String
 				course.room = entry[4]
-			else
+			elsif entry[4].class == Float
 				course.room = entry[4].floor
 			end
 			
 			course.building = entry[5]
 			course.start_time = entry[6]
-			day_ary = entry[7].split(//)
-			(course.monday = true) if day_ary.include?("M")
-			(course.tuesday = true) if day_ary.include?("T")
-			(course.wednesday = true) if day_ary.include?("W")
-			(course.thursday = true) if day_ary.include?("R")
-			(course.friday = true) if day_ary.include?("F")
+			if entry[7]
+				day_ary = entry[7].split(//)
+				(course.monday = true) if day_ary.include?("M")
+				(course.tuesday = true) if day_ary.include?("T")
+				(course.wednesday = true) if day_ary.include?("W")
+				(course.thursday = true) if day_ary.include?("R")
+				(course.friday = true) if day_ary.include?("F")
+			end
 			course.save
 		end
 	end
