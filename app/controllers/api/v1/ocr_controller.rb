@@ -9,7 +9,9 @@ class Api::V1::OcrController < ApiController
 		url = nil
 		while ! url do
 			tasks = get_task_list
-			url = find_url(tasks, task_id)
+			if tasks
+				url = find_url(tasks, task_id)
+			end
 			sleep(1)
 		
 		end
@@ -43,7 +45,11 @@ class Api::V1::OcrController < ApiController
 	def get_task_list
 		response = HTTParty.get('https://cloud.ocrsdk.com/listFinishedTasks',
 			:headers => { "Authorization" => "Basic S2VlcCBVcCBBcHA6R293MVVLcW1XL0FNSXRkZ0Q0SWhHMTVJIA=="})
-		response.parsed_response.first[1]["task"]
+		if response.parsed_response.first && response.parsed_response.first[1] 
+			response.parsed_response.first[1]["task"]
+		else
+			return nil
+		end
 	end
 
 
