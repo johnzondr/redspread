@@ -16,7 +16,7 @@ class Api::V1::OcrController < ApiController
 		end
 		@course_registration_numbers = Ocr.parse(url)
 
-			if @courses_registration_numbers.any?
+			if @course_registration_numbers.any?
 				p "yes"
 				p @course_registration_numbers
 				current_user.register(@course_registration_numbers)
