@@ -4,8 +4,7 @@ class Api::V1::OcrController < ApiController
 	def post
 		task_id = params[:task_id]
 		current_user = User.find_by(token: params[:token])
-		# p tasks
-		# p task_id.class
+		
 		url = nil
 		while ! url do
 			tasks = get_task_list
@@ -15,11 +14,11 @@ class Api::V1::OcrController < ApiController
 			sleep(1)
 		
 		end
-		@courses_registration_numbers = Ocr.parse(url)
+		@course_registration_numbers = Ocr.parse(url)
 
-			if @courses.any?
+			if @courses_registration_numbers.any?
 				p "yes"
-				p @courses
+				p @course_registration_numbers
 				current_user.register(@course_registration_numbers)
 				render "post"
 				return
