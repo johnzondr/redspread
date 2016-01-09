@@ -20,6 +20,7 @@ class Api::V1::OcrController < ApiController
 				p "yes"
 				p @course_registration_numbers
 				current_user.register(@course_registration_numbers)
+				current_user.reload
 				render "post"
 				return
 			end
