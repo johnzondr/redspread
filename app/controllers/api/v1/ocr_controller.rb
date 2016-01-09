@@ -15,16 +15,16 @@ class Api::V1::OcrController < ApiController
 			sleep(1)
 		
 		end
-		@courses = Ocr.parse(url)
+		@courses_registration_numbers = Ocr.parse(url)
 
 			if @courses.any?
 				p "yes"
 				p @courses
-				current_user.register(@courses)
+				current_user.register(@course_registration_numbers)
 				render "post"
 				return
 			end
-		render nothing: true
+		@courses = current_user.courses
 
 	end
 
