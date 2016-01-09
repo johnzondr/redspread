@@ -27,6 +27,8 @@ class User < ActiveRecord::Base
 
 	def schedule_for(day)
 		case day
+		when "0" # 0 means full schedule
+			schedule = self.courses
 		when "1"
 			schedule = self.courses.where(monday: true)
 		when "2"
