@@ -21,8 +21,13 @@ class Api::V1::OcrController < ApiController
 				p @course_registration_numbers
 				current_user.register(@course_registration_numbers)
 			end
-			
-		@courses = current_user.courses
+
+		# handle current_user.courses = nil
+		if current_user.courses
+			@courses = current_user.courses
+		else
+			@courses = nil
+		end
 
 	end
 
