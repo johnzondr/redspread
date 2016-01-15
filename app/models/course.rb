@@ -7,6 +7,22 @@ class Course < ActiveRecord::Base
 
 
 #{Rails.root}/lib/prod.pem
+	def self.search(terms)
+
+		courses = Course.all
+
+		terms.each do |term|
+			if term.to_i != 0
+				courses = courses.where('course_number= ? OR course_registration_number= ?', term.to_i, term.to_i)
+			else
+				courses = courses.where(department: term)
+			end
+		end
+
+		courses
+
+	end
+
 
 	
 	def self.update_course_catalog(file)

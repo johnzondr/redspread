@@ -11,7 +11,7 @@ class Api::V1::OcrController < ApiController
 			if tasks
 				url = find_url(tasks, task_id)
 			end
-			sleep(1)
+			sleep(3)
 		
 		end
 		@course_registration_numbers = Ocr.parse(url)
