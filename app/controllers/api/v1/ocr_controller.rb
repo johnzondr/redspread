@@ -59,7 +59,7 @@ class Api::V1::OcrController < ApiController
 	def find_url(tasks, task_id)
 		url = nil
 		tasks.each do |task|
-			if task["id"] == task_id
+			if task["id"] == task_id.to_s
 				url = task["resultUrl"]
 				return url
 			end
