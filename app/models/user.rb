@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
 	def register(crn_ary)
 		crn_ary.each do |crn|
 
-			course= Course.where(course_registration_number: crn.to_i).take
+			course= Course.where(course_registration_number: crn.to_i).all
 
 			#regiser the course for the user if the course exists and the user is not already reigstered for it
 			if course && ( ! self.courses.include?(course))
@@ -19,7 +19,7 @@ class User < ActiveRecord::Base
 	end
 
 	def unenroll_course(course_id)
-		enrollment = CourseMembership.where(user_id: self.id, course_id: course_id).take
+		enrollment = CourseMembership.where(user_id: self.id, course_id: course_id).all
 		if enrollment
 			enrollment.delete
 		end
