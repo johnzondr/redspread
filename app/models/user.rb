@@ -8,12 +8,13 @@ class User < ActiveRecord::Base
 	def register(crn_ary)
 		crn_ary.each do |crn|
 
-			course= Course.where(course_registration_number: crn.to_i).all
-
+			courses = Course.where(course_registration_number: crn.to_i).all
+			courses.each do |course|
 			#regiser the course for the user if the course exists and the user is not already reigstered for it
-			if course && ( ! self.courses.include?(course))
-				course_id = course.id
-				CourseMembership.create(user_id: self.id, course_id: course_id)
+				if course && ( ! self.courses.include?(course))
+					course_id = course.id
+					CourseMembership.create(user_id: self.id, course_id: course_id)
+				end
 			end
 		end
 	end
@@ -21,7 +22,7 @@ class User < ActiveRecord::Base
 	def unenroll_course(course_id)
 		enrollment = CourseMembership.where(user_id: self.id, course_id: course_id).all
 		if enrollment
-			enrollment.delete
+			enrollment.delete_all
 		end
 	end
 
