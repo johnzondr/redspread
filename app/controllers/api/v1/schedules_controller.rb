@@ -3,6 +3,11 @@ class Api::V1::SchedulesController < ApiController
 	def index
 		day = params[:day].to_s
 		@schedule = current_user.schedule_for(day)
+
+		##hacky solution until resolve frontend course schedule item view
+		@schedule.each do |course|
+			course.room = course.course_number
+		end
 	end
 
 	def destroy
