@@ -32,8 +32,9 @@ class Course < ActiveRecord::Base
 			course = find_by(course_registration_number: entry[3]) || new
 			course.name = entry[0]
 			course.department = entry[1]
-
-			course.course_number = entry[2].floor if entry[2] == Float
+			if entry[2].class == Float
+				course.course_number = entry[2].floor
+			end
 			course.course_registration_number = entry[3]
 			
 			if entry[4].class == String
