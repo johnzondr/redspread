@@ -29,7 +29,7 @@ class Course < ActiveRecord::Base
 		catalog = Roo::Spreadsheet.open(file)
 		(2..catalog.last_row).each do |i|
 			entry = catalog.row(i)
-			course = find_by(course_registration_number: entry[3]) || new
+			course = Course.new
 			course.name = entry[0]
 			course.department = entry[1]
 			if entry[2].class == Float
@@ -42,9 +42,11 @@ class Course < ActiveRecord::Base
 			elsif entry[4].class == Float
 				course.room = entry[4].floor
 			end
-			
+		
 			course.building = entry[5]
+			p entry[6]			
 			course.start_time = entry[6]
+
 			if entry[7]
 				day_ary = entry[7].split(//)
 				(course.monday = true) if day_ary.include?("M")
@@ -56,6 +58,45 @@ class Course < ActiveRecord::Base
 			course.save
 		end
 	end
+	def self.correct_room
+		catalog = Roo::Spreadsheet.open("#{Rails.root}/lib/roomnum.xlsx")
+		(2..catalog.last_row).each do |i|
+			entry = catalog.row(i)
+			p entry
+
+			crn = entry[0]
+			p crn
+
+			day_ary = entry[1].split(//)
+			monday = day_ary.include?("M")
+			p monday
+			tuesday = day_ary.include?("T")
+			p tuesday
+			wednesday = day_ary.include?("W")
+			p wednesday
+			thursday = day_ary.include?("R")
+			friday = day_ary.include?("F")
+
+			if entry[7].class == String
+				room = entry[7]
+			elsif entry[7].class == Float
+				room = entry[7].floor
+			end
+			p room
+
+			p entry[6]
+			# start_time = entry[6]
+			# p start_time
+
+			course = Course.where(course_registration_number: crn, monday: monday, tuesday: tuesday, thursday: thursday, friday: friday).take
+			p course
+			course.room = room
+			course.save
+		end
+
+	end
+
+
 
 	def self.update_default
 		update_course_catalog("#{Rails.root}/lib/course_catalog.xlsx")
