@@ -63,7 +63,7 @@ class Course < ActiveRecord::Base
 		end
 	end
 	def self.correct_course_num
-		catalog = Roo::Spreadsheet.open("#{Rails.root}/lib/course_catalog.xlsx")
+		catalog = Roo::Spreadsheet.open("#{Rails.root}/lib/course_catalog_test.xlsx")
 		(2..catalog.last_row).each do |i|
 			entry = catalog.row(i)
 
@@ -89,8 +89,10 @@ class Course < ActiveRecord::Base
 			# p start_time
 
 			course = Course.where(course_registration_number: crn, monday: monday, tuesday: tuesday, thursday: thursday, friday: friday, start_time: start_time).take
-			if course && course.course_number = nil
-				p course
+			
+			if course
+				# course.course_number = nil)
+				# p course
 				course.course_number = course_number
 				course.save
 			end
