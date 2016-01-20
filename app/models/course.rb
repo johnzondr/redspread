@@ -63,7 +63,7 @@ class Course < ActiveRecord::Base
 		end
 	end
 	def self.correct_course_num
-		catalog = Roo::Spreadsheet.open("#{Rails.root}/lib/course_catalog_test.xlsx")
+		catalog = Roo::Spreadsheet.open("#{Rails.root}/lib/course_catalog.xlsx")
 		(2..catalog.last_row).each do |i|
 			entry = catalog.row(i)
 
