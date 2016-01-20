@@ -32,9 +32,13 @@ class Course < ActiveRecord::Base
 			course = Course.new
 			course.name = entry[0]
 			course.department = entry[1]
+
 			if entry[2].class == Float
 				course.course_number = entry[2].floor
+			elsif entry[2].class == String
+				course.course_number = entry[2].to_i.floor
 			end
+
 			course.course_registration_number = entry[3]
 			
 			if entry[4].class == String
@@ -58,40 +62,38 @@ class Course < ActiveRecord::Base
 			course.save
 		end
 	end
-	def self.correct_room
-		catalog = Roo::Spreadsheet.open("#{Rails.root}/lib/roomnum.xlsx")
+	def self.correct_course_num
+		catalog = Roo::Spreadsheet.open("#{Rails.root}/lib/course_catalog.xlsx")
 		(2..catalog.last_row).each do |i|
 			entry = catalog.row(i)
-			p entry
 
-			crn = entry[0]
-			p crn
+			crn = entry[3]
 
-			day_ary = entry[1].split(//)
-			monday = day_ary.include?("M")
-			p monday
-			tuesday = day_ary.include?("T")
-			p tuesday
-			wednesday = day_ary.include?("W")
-			p wednesday
-			thursday = day_ary.include?("R")
-			friday = day_ary.include?("F")
-
-			if entry[7].class == String
-				room = entry[7]
-			elsif entry[7].class == Float
-				room = entry[7].floor
+			if entry[7]
+				day_ary = entry[7].split(//)
+				monday = day_ary.include?("M")
+				tuesday = day_ary.include?("T")
+				wednesday = day_ary.include?("W")
+				thursday = day_ary.include?("R")
+				friday = day_ary.include?("F")
 			end
-			p room
 
-			p entry[6]
-			# start_time = entry[6]
+			if entry[2].class == Float
+				course_number = entry[2].floor
+			elsif entry[2].class == String
+				course_number = entry[2].to_i.floor
+			end
+
+			# p entry[6]
+			start_time = entry[6]
 			# p start_time
 
-			course = Course.where(course_registration_number: crn, monday: monday, tuesday: tuesday, thursday: thursday, friday: friday).take
-			p course
-			course.room = room
-			course.save
+			course = Course.where(course_registration_number: crn, monday: monday, tuesday: tuesday, thursday: thursday, friday: friday, start_time: start_time).take
+			if course && course.course_number = nil
+				p course
+				course.course_number = course_number
+				course.save
+			end
 		end
 
 	end

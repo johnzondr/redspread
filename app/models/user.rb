@@ -3,6 +3,20 @@ class User < ActiveRecord::Base
 	has_secure_token
 	has_many :course_memberships
 	has_many :courses, :through => :course_memberships
+	serialize :crn
+
+	def save_crn
+
+		crn_ary = []
+		courses.each do |course|
+			if crn_ary.exclude?(course.course_registration_number)
+				crn_ary << course.course_registration_number
+			end
+		end
+		self.crn = crn_ary
+		self.save
+
+	end
 
 
 	def register(crn_ary)
