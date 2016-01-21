@@ -15,9 +15,10 @@ class Course < ActiveRecord::Base
 			if term.to_i != 0
 				courses = courses.where('course_number= ? OR course_registration_number= ?', term.to_i, term.to_i)
 			else
-				courses = courses.where(department: term)
+				courses = courses.where(department: term.upcase)
 			end
 		end
+		p courses
 
 		courses
 

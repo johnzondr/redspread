@@ -1,7 +1,7 @@
 require 'parse'
 
 class Api::V1::OcrController < ApiController
-	def post
+	def post #register a user's schedule via ocr
 		task_id = params[:task_id]
 		current_user = User.find_by(token: params[:token])
 		
@@ -35,7 +35,7 @@ class Api::V1::OcrController < ApiController
 		render json: '{yes:no}'
 	end
 
-	def destroy
+	def destroy #destroy users course , deprecated
 		current_user = User.find(params[:user_id])
 		current_user.courses.delete_all
 		render nothing: true

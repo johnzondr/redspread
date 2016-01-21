@@ -1,6 +1,12 @@
 require 'api_constraints'
 
 Rails.application.routes.draw do
+  namespace :api do
+  namespace :v1 do
+    get 'courses/search'
+    end
+  end
+
     root 'api/v1/ocr#index'
   # constraints :subdomain => 'api' do
     namespace :api, path: nil, defaults: {format: 'json'} do
@@ -10,7 +16,14 @@ Rails.application.routes.draw do
         post 'ocr', to: 'ocr#post', as: 'ocr'
         delete 'ocr', to: 'ocr#destroy', as: 'ocr_delete'
         resources :users, :only => [:create]     
-        resources :schedules   
+        resources :schedules
+        
+        # get 'search', to:  'courses#search', as: 'course_search'
+        resources :courses do
+          collection do
+            get 'search'
+          end  
+        end  
       end
 
       # scope module: :v3, constraints: ApiConstraints.new(version: 3) do
